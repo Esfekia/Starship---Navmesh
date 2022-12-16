@@ -5,7 +5,13 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
+    public float miningDuration = 2f;
+    
     private NavMeshAgent agent;
+    private float miningTimer;
+    
+    
+    private float minerals;
     
     // Start is called before the first frame update
     void Start()
@@ -28,6 +34,10 @@ public class Player : MonoBehaviour
             }
 
         }
+
+        // make the mining timer work
+        miningTimer -= Time.deltaTime;
+
     }
 
     void OnTriggerStay (Collider otherCollider)
@@ -35,7 +45,18 @@ public class Player : MonoBehaviour
         if (otherCollider.gameObject.GetComponent<Rock>() != null)
         {
             Rock rock = otherCollider.gameObject.GetComponent<Rock>();
-            Debug.Log("Mine");            
+            if (miningTimer <= 0 && rock.minerals>0)
+            {                            
+                miningTimer = miningDuration;                
+
+                minerals++;
+                Debug.Log("Player now has " + minerals + " minerals");
+                rock.Mine();
+
+            }
+
+
+
         }
     }
 }
