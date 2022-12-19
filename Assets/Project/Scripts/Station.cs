@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class Station : MonoBehaviour
 {
+
+    public int requiredMinerals = 10;
+    private bool active = false;
+    public bool IsActive { get { return active; } }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        ChangeTransparency(0.3f);
+        ChangeTransparency(0.2f);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Activate()
     {
-        
-    }
+        active = true;
+        ChangeTransparency(1f);
+    }        
 
     void ChangeTransparency(float value)
     {
@@ -22,8 +29,8 @@ public class Station : MonoBehaviour
         {
             foreach (Material material in renderer.materials)
             {
-                // set mode to transparent
-                material.SetFloat("_Mode", 3);
+                // set rendering mode transparent if value less than 1 / otherwise opaque
+                material.SetFloat("_Mode", value <1.0 ? 3: 0);
 
                 // change color
                 Color currentColor = material.GetColor("_Color");

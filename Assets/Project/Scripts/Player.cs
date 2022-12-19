@@ -40,6 +40,20 @@ public class Player : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider otherCollider)
+    {
+        if (otherCollider.gameObject.GetComponent<Station>() != null)
+        {
+            Station station = otherCollider.gameObject.GetComponent<Station>();
+
+            if (!station.IsActive && minerals >= station.requiredMinerals)
+            {
+                minerals -= station.requiredMinerals;
+                station.Activate();
+            }
+
+        }
+    }
     void OnTriggerStay (Collider otherCollider)
     {
         if (otherCollider.gameObject.GetComponent<Rock>() != null)
