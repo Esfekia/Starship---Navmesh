@@ -6,13 +6,17 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     public float miningDuration = 2f;
-    
     private NavMeshAgent agent;
-    private float miningTimer;
-    
-    
+    private float miningTimer;       
     private float minerals;
-    
+
+    public AudioSource moveSound;
+    public AudioSource miningSound;
+    public AudioSource activateSound;
+
+    // getter to access the private mineral above
+    public int Minerals { get { return (int)minerals; } }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +35,7 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 agent.SetDestination(hit.point);
+                moveSound.Play();
             }
 
         }
@@ -50,6 +55,7 @@ public class Player : MonoBehaviour
             {
                 minerals -= station.requiredMinerals;
                 station.Activate();
+                activateSound.Play();
             }
 
         }
@@ -63,9 +69,9 @@ public class Player : MonoBehaviour
             {                            
                 miningTimer = miningDuration;                
 
-                minerals++;
-                Debug.Log("Player now has " + minerals + " minerals");
+                minerals++;                
                 rock.Mine();
+                miningSound.Play();
 
             }
 

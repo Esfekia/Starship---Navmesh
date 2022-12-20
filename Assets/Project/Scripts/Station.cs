@@ -13,7 +13,7 @@ public class Station : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChangeTransparency(0.2f);
+        ChangeTransparency(0.1f);
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class Station : MonoBehaviour
                 material.SetInt("_Zwrite", 0);
                 material.DisableKeyword("_ALPHATEST_ON");
                 material.EnableKeyword("_ALPHABLEND_ON");
-              
+                material.renderQueue = 3000;
             }
         }
     }
